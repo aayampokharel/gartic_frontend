@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:web_socket_channel/web_socket_channel.dart';
-import 'package:x/painter.dart';
+import 'package:x/painterStructure.dart';
 import 'package:http/http.dart' as http;
 
 class MyApp extends StatefulWidget {
@@ -351,8 +351,12 @@ class _MyAppState extends State<MyApp> {
                         );
                       },
                     ),
-                    Painter(widget.currentName, currentTurn,
-                        localStreamForTextField, widget.getListOfWords),
+                    Painter(
+                        widget.currentName,
+                        currentTurn,
+                        localStreamForTextField,
+                        widget.getListOfWords,
+                        widget.getListOfWords),
                   ],
                 ),
               );

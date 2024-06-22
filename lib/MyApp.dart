@@ -1,9 +1,13 @@
 import 'dart:convert';
+import 'dart:ui';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+
 import 'dart:async';
-//import 'package:web_socket_channel/web_socket_channel.dart';
+
 import 'package:x/CorrectDialogue.dart';
-//import 'package:x/Message/fieldRow.dart';
+
 import 'package:x/drawer/body.dart';
 import 'package:x/drawer/header.dart';
 import 'package:x/logic/apiservice.dart';
@@ -12,7 +16,7 @@ import 'package:x/logic/channel.dart';
 import 'package:x/logic/drawerStream.dart';
 import 'package:x/messsagecontainer.dart';
 import 'package:x/okButtonControl.dart';
-import 'package:x/painter.dart';
+import 'package:x/painterStructure.dart';
 import 'package:x/main.dart';
 import 'package:http/http.dart' as http;
 import 'package:x/logic/ChatController.dart';
@@ -26,19 +30,28 @@ class MyApp extends StatefulWidget {
   State<MyApp> createState() => _MyAppState();
 }
 
-bool toogleReadOnly = false;
+bool toogleReadOnly = false; //! for textfield.
 
 var toogleForTextFieldIfTrue =
     false; //@ if true after hitting correct answer , the client should be able to talk in break
 
+var toogleValueForBlur = true;
+
 class _MyAppState extends State<MyApp> {
+  void toogleBlurSetState() {
+    print("❌❌❌❌❌❌");
+    setState(() {
+      toogleValueForBlur = false;
+    });
+  }
+
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final Channel channel = Channel();
 
   final ChatController chatController = ChatController();
   final BoolStream boolStreamController = BoolStream();
 
-  String currentTurn = "nope";
+  String currentTurn = "nope"; //! dummy value as nope.
   List listOfMessage = [];
   DrawerStream drawerStream = DrawerStream();
 //! names channel is to get the lit of players wheen drawer is
@@ -48,6 +61,7 @@ class _MyAppState extends State<MyApp> {
   var messageStream;
   var forDrawerVariable;
   Map<String, int> drawerMap = {};
+
   @override
   void initState() {
     super.initState();
@@ -110,25 +124,54 @@ class _MyAppState extends State<MyApp> {
           icon: const Icon(Icons.menu),
         ),
       ),
-      body: FutureBuilder(
-          future:
-              responses, //! responses compulsory cha cause esle add ni garirako cha the currentName to the list in the backend an return ing first  element which is irrelevant OR RETURNS BREAK IF ALL ARE IN BREAK but the thiing will only be returned after the adding of element in the liist
-          builder: (context, snapshots) {
-            if (snapshots.connectionState == ConnectionState.done) {
-              currentTurn = snapshots.data.toString();
-              return SingleChildScrollView(
-                child: Column(
-                  children: [
-                    messageStreamBuilder(),
-                    Painter(widget.currentName, currentTurn,
-                        boolStreamController.add, widget.getListOfWords),
-                  ],
-                ),
-              );
-            } else {
-              return const CircularProgressIndicator();
-            }
-          }),
+      body: Stack(
+        alignment: Alignment.center,
+        children: [
+          FutureBuilder(
+              future:
+                  responses, //! responses compulsory cha cause esle add ni garirako cha the currentName to the list in the backend an return ing first  element which is irrelevant OR RETURNS BREAK IF ALL ARE IN BREAK but the thiing will only be returned after the adding of element in the liist
+              builder: (context, snapshots) {
+                if (snapshots.connectionState == ConnectionState.done) {
+                  currentTurn = snapshots.data.toString();
+                  return SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        messageStreamBuilder(),
+                        Painter(
+                            widget.currentName,
+                            currentTurn,
+                            boolStreamController.add,
+                            widget.getListOfWords,
+                            toogleBlurSetState),
+                      ],
+                    ),
+                  );
+                } else {
+                  return const SizedBox(
+                    height: double.infinity,
+                    width: double.infinity,
+                  );
+                }
+              }),
+          Visibility(
+            //! this is for the blurred initializer.
+            visible: toogleValueForBlur,
+            child: IgnorePointer(
+              child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+                  child: Container(
+                      color: Colors.white.withOpacity(0.5),
+                      height: double.infinity,
+                      width: double.infinity,
+                      child: Center(
+                          child: SizedBox(
+                              height: 200,
+                              width: 200,
+                              child: const CircularProgressIndicator())))),
+            ),
+          ),
+        ],
+      ),
     );
   }
 

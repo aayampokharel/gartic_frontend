@@ -1,6 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_drawing_board/flutter_drawing_board.dart';
+import 'package:x/MyApp.dart';
 import 'package:x/logic/paintChannel.dart';
 
 class Drawing extends StatelessWidget {
@@ -11,6 +11,7 @@ class Drawing extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    toogleValueForBlur = false;
     return Container(
       width: 300,
       height: 300, //# for drawer calls getJsonList() to send the points.

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:x/MyApp.dart';
 import 'package:http/http.dart' as http;
 
+//@ for initial name page.
 class Name extends StatefulWidget {
   const Name({super.key});
 

@@ -19,13 +19,15 @@ class Painter extends StatefulWidget {
   String currentTurn;
   Function(bool) localStreamForTextField;
   Future Function() getListOfWords;
+  void Function() toogleBlurSetState;
 
   Painter(this.currentName, this.currentTurn, this.localStreamForTextField,
-      this.getListOfWords,
+      this.getListOfWords, this.toogleBlurSetState,
       {super.key});
 }
 
 class _PainterState extends State<Painter> {
+  late bool runBlurOnce;
   var localName;
   final DrawingController guesserController = DrawingController();
   final DrawingController drawingController = DrawingController();
@@ -45,7 +47,7 @@ class _PainterState extends State<Painter> {
   void initState() {
     //@ alertWebsocket() is called to make input field is readonly while player is drawing
     super.initState();
-
+    runBlurOnce = true;
     _initializer();
 
     if (widget.currentName == widget.currentTurn) {
@@ -82,6 +84,11 @@ class _PainterState extends State<Painter> {
             ///again setting readonly for the input field for drawer
           }
           if (snapshott.data == widget.currentName && snapshott.hasData) {
+            if (runBlurOnce) {
+              Future.delayed(const Duration(milliseconds: 300),
+                  () => widget.toogleBlurSetState());
+              runBlurOnce = false;
+            }
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -108,6 +115,14 @@ class _PainterState extends State<Painter> {
           } else {
             //@ THIS is called for non-drawers ones.
             widget.localStreamForTextField(false);
+            if (runBlurOnce) {
+              Future.delayed(
+                  const Duration(
+                      milliseconds:
+                          300), //initially even in drawer this future runs initially because else condition run huncha initially and then drawer ko ma espachi yellow display huncha , so this will run initially.so timer will be effective of this only. JUST FOR SAFETY ABOVE IS NOT REMOVED.
+                  () => widget.toogleBlurSetState());
+              runBlurOnce = false;
+            }
             return guesserStructure(toogleValueForProgressBar, forProgressBar,
                 paintStream, guesserController);
           }

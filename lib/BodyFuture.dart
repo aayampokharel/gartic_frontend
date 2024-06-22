@@ -1,44 +1,51 @@
-// import 'dart:convert';
+// import 'dart:ui';
+
 // import 'package:flutter/material.dart';
-// import 'package:flutter/widgets.dart';
-// import 'dart:async';
-// import 'package:web_socket_channel/web_socket_channel.dart';
-// import 'package:x/MyApp.dart';
-// import 'package:x/painter.dart';
-// import 'package:http/http.dart' as http;
 
-// class BodyFuture extends StatefulWidget {
-//   dynamic responses;
-//   String currentTurn;
-//   dynamic messageStream;
-//   List<dynamic> listOfMessage;
-//   StreamController<bool> boolStreamController;
-//   TextEditingController chatController;
-//   var insideOnPressed; ////this might give error while running .
-//   var localStreamForTextField;
-
-//   String currentName;
-
-//   Future<dynamic> Function() getListOfWords;
-//   BodyFuture(
-//       this.currentName,
-//       this.getListOfWords,
-//       this.responses,
-//       this.currentTurn,
-//       this.messageStream,
-//       this.listOfMessage,
-//       this.boolStreamController,
-//       this.chatController,
-//       this.insideOnPressed,
-//       this.localStreamForTextField);
-
-//   @override
-//   State<BodyFuture> createState() => _BodyFutureState();
+// void main() {
+//   runApp(const StackPractice());
 // }
 
-// class _BodyFutureState extends State<BodyFuture> {
+// class StackPractice extends StatelessWidget {
+//   const StackPractice({Key? key});
+
 //   @override
 //   Widget build(BuildContext context) {
-//     return
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text('Stack Practice'),
+//       ),
+//       body: SizedBox(
+//         // Wrap with SizedBox to provide height constraint
+//         height: 200, // Set desired height
+//         child: Stack(
+//           alignment: Alignment.bottomRight,
+//           children: [
+//             Container(
+//               color: Colors.red,
+//               height: 200,
+//               width: 200,
+//               child: Text(
+//                 "Hello, this is a long text!",
+//                 style: TextStyle(color: Colors.white),
+//               ),
+//             ),
+//             Container(
+//               color: Colors.green,
+//               height: 100,
+//               width: 100,
+//             ),
+//             BackdropFilter(
+//               filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+//               child: Container(
+//                 color: Colors.blue.withOpacity(0.5),
+//                 height: 50,
+//                 width: 50,
+//               ),
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
 //   }
 // }
