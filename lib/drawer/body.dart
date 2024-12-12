@@ -17,18 +17,6 @@ class _BodyState extends State<Body> {
   DrawerStream drawerStream = DrawerStream();
   @override
   Widget build(BuildContext context) {
-    //  StreamBuilder(
-    //               stream: drawerStream.broadcastStream,
-    //               builder: (context, snap) {
-    //                 if (snap.hasData) {
-    //                   List responseList = [];
-
-    //                   responseList = json.decode((snap.data!));
-    //                   return Body(drawerStream: drawerStream);
-    //                 } else {
-    //                   return const CircularProgressIndicator();
-    //                 }
-    //               }),
     return StreamBuilder(
         stream: drawerStream.broadcastStream,
         builder: (context, snapshot) {

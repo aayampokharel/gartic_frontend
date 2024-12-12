@@ -39,7 +39,6 @@ var toogleValueForBlur = true;
 
 class _MyAppState extends State<MyApp> {
   void toogleBlurSetState() {
-    print("❌❌❌❌❌❌");
     setState(() {
       toogleValueForBlur = false;
     });
@@ -96,33 +95,33 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      drawer: Drawer(
-        child: Column(
-          children: [
-            const Header(),
-            SizedBox(
-              height: 200,
-              width: 200,
-              child: Body(drawerStream: drawerStream),
-            ),
-          ],
-        ),
-      ),
+      // drawer: Drawer(
+      //   child: Column(
+      //     children: [
+      //       // const Header(),
+      //       SizedBox(
+      //         height: 200,
+      //         width: 200,
+      //         child: Body(drawerStream: drawerStream),
+      //       ),
+      //     ],
+      //   ),
+      // ),
       appBar: AppBar(
         title: const Text(
             'Drawsaurus '), //! I HAVENOT ADDED THE REBUILD OF THE TOOGLEREADONLY ABA TYO KASARI GARNE HO BASED ON SOME VALUE GARNE HO KI HOINA BHANERA DISCUSS GARNA PARCHA .
-        leading: IconButton(
-          onPressed: () async {
-            var res =
-                await http.get(Uri.parse('http://localhost:8080/listofnames'));
+        // leading: IconButton(
+        //   onPressed: () async {
+        //     var res =
+        //         await http.get(Uri.parse('http://localhost:8080/listofnames'));
 
-            Future.delayed(const Duration(seconds: 1), () {
-              drawerStream.add(res.body);
-            });
-            _scaffoldKey.currentState?.openDrawer();
-          },
-          icon: const Icon(Icons.menu),
-        ),
+        //     Future.delayed(const Duration(seconds: 1), () {
+        //       drawerStream.add(res.body);
+        //     });
+        //     _scaffoldKey.currentState?.openDrawer();
+        //   },
+        //   icon: const Icon(Icons.menu),
+        // ),
       ),
       body: Stack(
         alignment: Alignment.center,
@@ -136,13 +135,13 @@ class _MyAppState extends State<MyApp> {
                   return SingleChildScrollView(
                     child: Column(
                       children: [
-                        messageStreamBuilder(),
                         Painter(
                             widget.currentName,
                             currentTurn,
                             boolStreamController.add,
                             widget.getListOfWords,
                             toogleBlurSetState),
+                        messageStreamBuilder(),
                       ],
                     ),
                   );
@@ -154,7 +153,7 @@ class _MyAppState extends State<MyApp> {
                 }
               }),
           Visibility(
-            //! this is for the blurred initializer.
+            //! this is for the blurred initializer.JUST DISPLAYED INITIALLY.
             visible: toogleValueForBlur,
             child: IgnorePointer(
               child: BackdropFilter(
@@ -182,22 +181,32 @@ class _MyAppState extends State<MyApp> {
         if (snapshot.hasData) {
           listOfMessage.add(json.decode(snapshot.data.toString()));
 
-          return SingleChildScrollView(
-            //#  BLUE ONE displayed after the first msg is sent else black color one.
-            child: Column(
-              children: [
-                containerForMessage(listOfMessage), //!problem here  BELOW:
-                StreamBuilder<bool>(
-                    //! this controls the nullness of the ok button when answer is right .
-                    stream: boolStreamController.stream,
-                    builder: (context, noEntrySnapshot) {
-                      return okButtonControl(
-                          snapshot: snapshot,
-                          noEntrySnapshot: noEntrySnapshot,
-                          chatController: chatController,
-                          insideOnPressed: insideOnPressed);
-                    }),
-              ],
+          return Center(
+            child: SingleChildScrollView(
+              //#  BLUE ONE displayed after the first msg is sent else black color one.
+              child: Container(
+                width: 500,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                  color: Color(
+                      0xfff1f1f1), //@ for sizing width and height of the message box .
+                ),
+                child: Column(
+                  children: [
+                    containerForMessage(listOfMessage), //!problem here  BELOW:
+                    StreamBuilder<bool>(
+                        //! this controls the nullness of the ok button when answer is right .
+                        stream: boolStreamController.stream,
+                        builder: (context, noEntrySnapshot) {
+                          return okButtonControl(
+                              snapshot: snapshot,
+                              noEntrySnapshot: noEntrySnapshot,
+                              chatController: chatController,
+                              insideOnPressed: insideOnPressed);
+                        }),
+                  ],
+                ),
+              ),
             ),
           );
         }

@@ -12,12 +12,14 @@ class guesserContainer extends StatelessWidget {
     paintStreamUse(guesserController, snapshots);
     return IgnorePointer(
       child: Container(
-        width: 300,
+        width: MediaQuery.of(context).size.width *
+            0.75, //! media query not recommended!!!!!__________
         height: 300,
-        color: const Color.fromARGB(255, 11, 185, 109),
+        color: Colors.white,
         child: DrawingBoard(
           controller: guesserController,
-          background: const SizedBox(width: 300, height: 300),
+          background: SizedBox(
+              width: MediaQuery.of(context).size.width * 0.75, height: 300),
           showDefaultActions: false,
           showDefaultTools: false,
         ),

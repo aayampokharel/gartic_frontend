@@ -7,7 +7,8 @@ class okButtonControl extends StatelessWidget {
   AsyncSnapshot<bool> noEntrySnapshot;
   ChatController chatController;
   dynamic Function(String) insideOnPressed;
-  okButtonControl({super.key, 
+  okButtonControl({
+    super.key,
     required this.snapshot,
     required this.noEntrySnapshot,
     required this.chatController,
@@ -19,7 +20,14 @@ class okButtonControl extends StatelessWidget {
     if (snapshot.hasData) {
       //? this below is not required as ?? false ko use nai bhaena ni after data is there .
 
-      return fieldRow(noEntrySnapshot, chatController, insideOnPressed);
+      return Container(
+          decoration: BoxDecoration(
+            border: Border.all(
+                color: Color.fromARGB(255, 192, 192, 192).withOpacity(0.5),
+                width: 3),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: fieldRow(noEntrySnapshot, chatController, insideOnPressed));
 
       //     //@ this is for boolean stream controller. only displayed when no data i.e. at first
 
