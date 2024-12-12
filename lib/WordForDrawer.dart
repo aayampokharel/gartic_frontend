@@ -8,9 +8,16 @@ class WordForDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       //# THis is the text displayed for drawer.
-      width: 300,
+      width: MediaQuery.of(context).size.width * 0.75,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.all(
+          Radius.circular(10),
+        ),
+        color: Color.fromARGB(255, 237, 174, 29),
+        border: Border.all(width: 3, color: Colors.white),
+      ),
       padding: const EdgeInsets.all(10),
-      color: Colors.pink,
+
       child: Text(singleValue.toString()),
     );
   }

@@ -13,9 +13,9 @@ class Drawing extends StatelessWidget {
   Widget build(BuildContext context) {
     toogleValueForBlur = false;
     return Container(
-      width: 300,
+      width: MediaQuery.of(context).size.width * .75,
       height: 300, //# for drawer calls getJsonList() to send the points.
-      color: Colors.yellow,
+      color: Colors.white,
       child: Listener(
         onPointerCancel: (s) {
           paintChannel.getListJson(drawingController.getJsonList());
@@ -31,7 +31,8 @@ class Drawing extends StatelessWidget {
         },
         child: DrawingBoard(
           controller: drawingController,
-          background: const SizedBox(width: 300, height: 300),
+          background: SizedBox(
+              width: MediaQuery.of(context).size.width * .75, height: 300),
           showDefaultActions: true,
           showDefaultTools: true,
         ),

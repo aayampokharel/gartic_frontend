@@ -70,63 +70,80 @@ class _PainterState extends State<Painter> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
-        stream: checkStream,
+    return Container(
+      padding: EdgeInsets.all(8.0),
+      color: Color(0xffd2507583),
+      child: StreamBuilder(
+          stream: checkStream,
 
-        /// this is for checking if the turn is this particular user or not
-        builder: (context, snapshott) {
-          drawingController.clear();
-          guesserController.clear();
-          singleValue = localName;
-          if (snapshott.data == widget.currentName) {
-            widget.localStreamForTextField(true);
+          /// this is for checking if the turn is this particular user or not
+          builder: (context, snapshott) {
+            drawingController.clear();
+            guesserController.clear();
+            singleValue = localName;
+            if (snapshott.data == widget.currentName) {
+              widget.localStreamForTextField(true);
 
-            ///again setting readonly for the input field for drawer
-          }
-          if (snapshott.data == widget.currentName && snapshott.hasData) {
-            if (runBlurOnce) {
-              Future.delayed(const Duration(milliseconds: 300),
-                  () => widget.toogleBlurSetState());
-              runBlurOnce = false;
+              ///again setting readonly for the input field for drawer
             }
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                animationBar(),
-                WordForDrawer(singleValue),
-                Drawing(paintChannel, drawingController),
-              ],
-            );
+            if (snapshott.data == widget.currentName && snapshott.hasData) {
+              if (runBlurOnce) {
+                Future.delayed(const Duration(milliseconds: 300),
+                    () => widget.toogleBlurSetState());
+                runBlurOnce = false;
+              }
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  animationBar(context),
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(10),
+                      ),
+                      color: Colors.white,
+                      border: Border.all(width: 3),
+                    ),
+                    child: Column(
+                      children: [
+                        WordForDrawer(singleValue),
+                        Drawing(paintChannel, drawingController),
+                      ],
+                    ),
+                  ),
+                ],
+              );
 
-            ///break is the data sent in the stream after a certain time for drawer to change the drawing power to someone else.
-          } else if ((snapshott.data.toString() == "Break")) {
-            singleValue = "";
+              ///break is the data sent in the stream after a certain time for drawer to change the drawing power to someone else.
+            } else if ((snapshott.data.toString() == "Break")) {
+              singleValue = "";
 
-            //! this is for not letting yellow player to write. working ...feri kina rewrite bhayo bhanda cause this painter is inside the streambuilder and already said its like server and setstate waiting for data and rebuilding the thing . so painter lai bahira pathaune from main.
+              //! this is for not letting yellow player to write. working ...feri kina rewrite bhayo bhanda cause this painter is inside the streambuilder and already said its like server and setstate waiting for data and rebuilding the thing . so painter lai bahira pathaune from main.
 
-            widget.getListOfWords().then((value) {
-              localName = jsonDecode(value).toString();
-            });
+              widget.getListOfWords().then((value) {
+                localName = jsonDecode(value).toString();
+              });
 
-            toogleValueForProgressBar = true;
-            return const BreakContainer();
+              toogleValueForProgressBar = true;
+              return const BreakContainer();
 
-            /// below code is for display of drawn elements.
-          } else {
-            //@ THIS is called for non-drawers ones.
-            widget.localStreamForTextField(false);
-            if (runBlurOnce) {
-              Future.delayed(
-                  const Duration(
-                      milliseconds:
-                          300), //initially even in drawer this future runs initially because else condition run huncha initially and then drawer ko ma espachi yellow display huncha , so this will run initially.so timer will be effective of this only. JUST FOR SAFETY ABOVE IS NOT REMOVED.
-                  () => widget.toogleBlurSetState());
-              runBlurOnce = false;
+              /// below code is for display of drawn elements.
+            } else {
+              //@ THIS is called for non-drawers ones.
+              widget.localStreamForTextField(false);
+              if (runBlurOnce) {
+                Future.delayed(
+                    const Duration(
+                        milliseconds:
+                            300), //initially even in drawer this future runs initially because else condition run huncha initially and then drawer ko ma espachi yellow display huncha , so this will run initially.so timer will be effective of this only. JUST FOR SAFETY ABOVE IS NOT REMOVED.
+                    () => widget.toogleBlurSetState());
+                runBlurOnce = false;
+              }
+              return guesserStructure(toogleValueForProgressBar, forProgressBar,
+                  paintStream, guesserController);
             }
-            return guesserStructure(toogleValueForProgressBar, forProgressBar,
-                paintStream, guesserController);
-          }
-        });
+          }),
+    );
   }
 
   @override

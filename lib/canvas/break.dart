@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class BreakContainer extends StatelessWidget {
@@ -9,9 +8,26 @@ class BreakContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.red,
-      child: const Text("take a break guys...... "),
+    return Column(
+      children: [
+        Container(
+          width: MediaQuery.of(context).size.width * .75,
+          color: const Color.fromARGB(255, 11, 81, 138),
+          child: Center(
+            child: const Text(
+              "take a break guys...... ",
+              style: TextStyle(
+                  fontFamily: "fsgravity", fontSize: 30, color: Colors.white),
+            ),
+          ),
+        ),
+        Container(
+          child: Image.asset(
+            "photos/flashClock.gif",
+            fit: BoxFit.contain,
+          ),
+        ),
+      ],
     );
 
     /// below code is for display of drawn elements.
