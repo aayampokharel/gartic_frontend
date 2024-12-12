@@ -20,7 +20,7 @@ class MyApps extends StatelessWidget {
       theme: ThemeData(
           colorScheme:
               ColorScheme.fromSeed(seedColor: const Color(0xffc5c5c5))),
-      home: const Name(),
+      home: Name(),
     );
   }
 }

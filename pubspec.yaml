@@ -85,6 +85,9 @@ flutter:
     - family: fsgravity
       fonts:
         - asset: fonts/fsgravity.ttf
+    - family: gravitas
+      fonts:
+        - asset: fonts/gravitas.ttf
         
   #
   # For details regarding fonts from package dependencies,

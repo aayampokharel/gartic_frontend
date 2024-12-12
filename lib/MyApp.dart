@@ -108,8 +108,12 @@ class _MyAppState extends State<MyApp> {
       //   ),
       // ),
       appBar: AppBar(
-        title: const Text(
-            'Drawsaurus '), //! I HAVENOT ADDED THE REBUILD OF THE TOOGLEREADONLY ABA TYO KASARI GARNE HO BASED ON SOME VALUE GARNE HO KI HOINA BHANERA DISCUSS GARNA PARCHA .
+        title: Center(
+          child: const Text(
+            'Draw & Guess ',
+            style: TextStyle(fontFamily: 'gravitas'),
+          ),
+        ), //! I HAVENOT ADDED THE REBUILD OF THE TOOGLEREADONLY ABA TYO KASARI GARNE HO BASED ON SOME VALUE GARNE HO KI HOINA BHANERA DISCUSS GARNA PARCHA .
         // leading: IconButton(
         //   onPressed: () async {
         //     var res =

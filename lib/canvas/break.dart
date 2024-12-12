@@ -12,10 +12,10 @@ class BreakContainer extends StatelessWidget {
       children: [
         Container(
           width: MediaQuery.of(context).size.width * .75,
-          color: const Color.fromARGB(255, 11, 81, 138),
+          //   color: const Color.fromARGB(255, 11, 81, 138),
           child: Center(
             child: const Text(
-              "take a break guys...... ",
+              "Resuming After A Short Break....... ",
               style: TextStyle(
                   fontFamily: "fsgravity", fontSize: 30, color: Colors.white),
             ),
