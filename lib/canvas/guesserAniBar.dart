@@ -19,16 +19,17 @@ class GuesserAnimationBar extends StatelessWidget {
               var responseDoubleTime =
                   double.parse(fsnapshot.data!.toString()) * 1000 + 600;
               responseDoubleTime =
-                  responseDoubleTime >= 19600 ? 19000 : responseDoubleTime;
+                  responseDoubleTime >= 19600 ? 19450 : responseDoubleTime;
 
               return TweenAnimationBuilder(
                 duration: Duration(
                     milliseconds:
                         19600 - int.parse(responseDoubleTime.toString())),
                 tween: Tween<double>(
-                    begin: (responseDoubleTime / 1000) *
-                        15, // iineach second 15 15 ko rate le bhyauna parcha animatiioin.
-                    end: 300),
+                  begin: (responseDoubleTime / 1000) * 15,
+                  end: MediaQuery.of(context).size.width *
+                      0.75, //! instead of using mediaquery i can use layoutbuilder as it will refresh once the dimension changes and the speed is itself adjusted for animation bar .
+                ),
                 builder: (BuildContext context, dynamic value, Widget? child) {
                   return Container(
                     decoration: BoxDecoration(
@@ -51,7 +52,8 @@ class GuesserAnimationBar extends StatelessWidget {
             } else {
               return TweenAnimationBuilder(
                 duration: const Duration(milliseconds: 19600),
-                tween: Tween<double>(begin: 0, end: 300),
+                tween: Tween<double>(
+                    begin: 0, end: MediaQuery.of(context).size.width * 0.75),
                 builder: (BuildContext context, dynamic value, Widget? child) {
                   return Container(
                     decoration: BoxDecoration(

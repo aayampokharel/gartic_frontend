@@ -13,7 +13,8 @@ class guesserStructure extends StatelessWidget {
   DrawingController guesserController;
 
   guesserStructure(this.toogleValueForProgressBar, this.forProgressBar,
-      this.paintStream, this.guesserController, {super.key});
+      this.paintStream, this.guesserController,
+      {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,15 +22,15 @@ class guesserStructure extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         GuesserAnimationBar(
-          //can combine this with above animation one with new parameter .
           toogleValueForProgressBar,
           forProgressBar,
         ),
         StreamBuilder(
-            stream: paintStream,
-            builder: (context, snapshots) {
-              return guesserContainer(guesserController, snapshots);
-            }),
+          stream: paintStream,
+          builder: (context, snapshots) {
+            return guesserContainer(guesserController, snapshots);
+          },
+        ),
       ],
     );
   }
