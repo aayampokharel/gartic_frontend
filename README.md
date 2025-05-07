@@ -1,16 +1,50 @@
-# x
+# 🎨 **Real Time Drawing and Guessing Game** 
 
-A new Flutter project.
+*A multiplayer drawing and guessing game with real-time synchronization, chat, and competitive gameplay*
 
-## Getting Started
+---
 
-This project is a starting point for a Flutter application.
+## 🚀 **Features**  
 
-A few resources to get you started if this is your first Flutter project:
+### 🖌️ **Core Gameplay**  
+- **Real-time synchronized drawing canvas** with smooth brush strokes  
+- **Multiplayer guessing system** with instant feedback  
+- **Turn-based gameplay** with automatic player rotation    
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+### ⏱️ **Game Flow**  
+- **Animated progress bar** representing time left for guessing the correct word.
+- **Automatic round progression** (Drawing → Guessing )  
+- **Instant round transitions** with smooth animations  
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### 💬 **Social Features**  
+- **Real-time chat** with:  
+  - Text messages  
+  - Emoji reactions  
+  - Correct Guess highlight  
+  
+
+---
+
+## 🖥️ **Tech Stack**  
+
+| Component        | Technology |
+|-----------------|------------|
+| Frontend        | Flutter(StreamBuilder,Canvas,etc) |
+| Backend         | Golang (Go) |
+| Real-Time       | nhooyr.io/websocket |
+
+---
+
+## 🎮 **Game Flow Diagram**  
+
+```mermaid
+graph TD
+    A[Player Login] --> B[Lobby]
+    B --> C{Game Start}
+    C --> D[Word Selection]
+    D --> E[Drawing Phase]
+    E --> F[Guessing Phase]
+    F --> G[Break]
+    G --> H{Next Round?}
+    H -->|Yes| D
+    H -->|No| I[Game Over]
